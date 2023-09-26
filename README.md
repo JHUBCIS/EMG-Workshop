@@ -52,7 +52,7 @@ These documentations should help you better understand the hardware and software
 
 - The Grove EMG is a **bipolar EMG**, meaning that it acquires an EMG signal by measuring voltages between each of the two EMG surface detection electrodes (red, white) and the reference electrode (black). 
 
-  <img src="https://cdnintech.com/media/chapter/40131/1512345123/media/image15.png" style="zoom: 80%;" />
+  <img src="z_README/image15.png" style="zoom: 80%;" />
 
 - Specifically, the surface EMG electrodes should be placed only  1– 2 cm apart between the motor unit and the tendinous insertion of the muscle, along the  longitudinal midline of the muscle. 
 
