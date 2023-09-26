@@ -8,7 +8,7 @@ by JHUBCIS 2023.9
   - One of the best IDEs out there, incredibly versatile. Definitely beats ArduinoIDE.
   - Works across Windows, Mac and Linux.
 - [PlatformIO IDE](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) 
-  - An VS Code extension that will practically allow you to work with any microcontroller (up to 1490 different kinds, definitely including many variants of Arduino, Adafruit, Attiny and Raspberry Pi). This is another major reason why we do not use ArduinoIDE.
+  - A VS Code extension that will practically allow you to work with any microcontroller (up to 1490 different kinds, definitely including many variants of Arduino, Adafruit, Attiny and Raspberry Pi). This is another major reason why we do not use ArduinoIDE.
 - [Teleplot](https://marketplace.visualstudio.com/items?itemName=alexnesnes.teleplot)
   - “A ridiculously simple tool to plot telemetry data from a running program and trigger function calls.”
   - This is another VS Code extension that can practically plot any kind of serial input data. Works great with PlatformIO IDE.
