@@ -5,9 +5,3 @@
 The library implements a lowpass filter, a highpass filter, and a bandpass filter using EMA, inspired by [this tutorial](https://www.norwegiancreations.com/2016/03/arduino-tutorial-simple-high-pass-band-pass-and-band-stop-filtering/).
 
 The main advantage of this package is that it can calculate the smoothing factor $\alpha$ for EMA from the cutoff frequency and the sampling frequency, based on [this formula](https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter).
-
-
-
-Xingyu (Brian) Zhou
-
-09.25.2023
