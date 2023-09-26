@@ -13,8 +13,6 @@ by JHUBCIS 2023.9
   - “A ridiculously simple tool to plot telemetry data from a running program and trigger function calls.”
   - This is another VS Code extension that can practically plot any kind of serial input data. Works great with PlatformIO IDE.
 
-
-
 ## Documentations 
 
 These documentations should help you better understand the hardware and software used in this workshop.
@@ -38,7 +36,11 @@ These documentations should help you better understand the hardware and software
   - Arduino library to make use of the Millis function for non blocking delays.
   - In this case, we use this so that the servo does not get updated too often so that its interference to the analog input significantly affects performance.
 
+### Private Library
 
+- [EMA_Filters](https://github.com/JHUBCIS/EMG-Workshop/blob/main/lib/EMA_Filters/README.md)
+  - implements a lowpass filter, a highpass filter, and a bandpass filter using [exponential moving average (EMA)](https://en.wikipedia.org/wiki/Exponential_smoothing), inspired by [this tutorial](https://www.norwegiancreations.com/2016/03/arduino-tutorial-simple-high-pass-band-pass-and-band-stop-filtering/).
+  - calculate the smoothing factor $\alpha$ for EMA from the cutoff frequency and the sampling frequency, based on [this formula](https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter).
 
 ## Tutorial
 
