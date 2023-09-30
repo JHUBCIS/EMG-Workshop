@@ -30,8 +30,8 @@ These documentations should help you better understand the hardware and software
 
 - [Servo](https://github.com/arduino-libraries/Servo)
   - Allows Arduino boards to control a variety of servo motors.
-- [movingAvg](https://github.com/JChristensen/movingAvg?utm_source=platformio&utm_medium=piohome)
-  - A simple Arduino library for calculating moving averages. Useful for smoothing sensor readings, etc.
+- [RunningAverage](https://github.com/RobTillaart/RunningAverage?utm_source=platformio&utm_medium=piohome)
+  - The library stores the last N individual values in a circular buffer to calculate the running average.
 - [NoDelay](https://github.com/M-tech-Creations/NoDelay?utm_source=platformio&utm_medium=piohome)
   - Arduino library to make use of the Millis function for non blocking delays.
   - In this case, we use this so that the servo does not get updated too often so that its interference to the analog input significantly affects performance.
