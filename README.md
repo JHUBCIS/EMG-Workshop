@@ -42,6 +42,12 @@ These documentations should help you better understand the hardware and software
   - implements a lowpass filter, a highpass filter, and a bandpass filter using [exponential moving average (EMA)](https://en.wikipedia.org/wiki/Exponential_smoothing), inspired by [this tutorial](https://www.norwegiancreations.com/2016/03/arduino-tutorial-simple-high-pass-band-pass-and-band-stop-filtering/).
   - calculate the smoothing factor $\alpha$ for EMA from the cutoff frequency and the sampling frequency, based on [this formula](https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter).
 
+Flowchart
+
+- Here’s an overview of how this demo works
+
+  <img src="z_README/image-20230930001155737.png" alt="image-20230930001155737" style="zoom:80%;" />
+
 ## Tutorial
 
 ### Getting Started
