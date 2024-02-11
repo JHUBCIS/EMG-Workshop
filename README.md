@@ -1,5 +1,19 @@
 # EMG-Workshop
 
+by JHUBCIS 2024.2
+
+This version includes an extra part that allows logging muscle contractions with button presses.
+
+## Setup
+
+1. attach EMG circuit to Base shield and Arduino/Seeeduino as with the regular EMG Workshop
+
+2. add extra circuit for the button, the resistor is 10 KΩ
+
+   - This design pulls down the button digital pin by default, provides better stability of input
+
+    <img src="z_README/Arduino with button.png" alt="image-20230930001155737" style="zoom:50%;" />
+
 by JHUBCIS 2023.9
 
 ## Dependencies
