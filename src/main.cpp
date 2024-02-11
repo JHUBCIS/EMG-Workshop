@@ -28,7 +28,7 @@ Thus need a "clock" for writing servo values less rapidly.
 
 //button parameters
 const int buttonPin = 4;  // the number of the pushbutton pin
-const int ledPin = 12;    // the number of the LED pin
+// const int ledPin = 12;    // the number of the LED pin
 
 // variables will change:
 int buttonState = 0;  // variable for reading the pushbutton status
@@ -37,7 +37,7 @@ int buttonState = 0;  // variable for reading the pushbutton status
 void setup() {
   Serial.begin(115200);
   // initialize the LED pin as an output:
-  pinMode(ledPin, OUTPUT);
+  // pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
 
@@ -68,13 +68,13 @@ void loop() {
   buttonState = digitalRead(buttonPin);
 
   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
-  if (buttonState == HIGH) {
-    // turn LED on:
-    digitalWrite(ledPin, HIGH);
-  } else {
-    // turn LED off:
-    digitalWrite(ledPin, LOW);
-  }
+  // if (buttonState == HIGH) {
+  //   // turn LED on:
+  //   digitalWrite(ledPin, HIGH);
+  // } else {
+  //   // turn LED off:
+  //   digitalWrite(ledPin, LOW);
+  // }
     Serial.print(">button press: ");
     Serial.println(buttonState);
 
