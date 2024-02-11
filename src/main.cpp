@@ -64,6 +64,11 @@ void setup() {
 
 
 void loop() {
+  static unsigned long loopStartTime = millis(); // Track when loop() started, records only once
+  unsigned long elapsedTime = millis() - loopStartTime; // Calculate elapsed time
+  Serial.print(">elapsed Time (ms): ");
+  Serial.println(elapsedTime);
+
   buttonState = digitalRead(buttonPin);
 
   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
