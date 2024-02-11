@@ -22,16 +22,26 @@ int emg_evlp_thd = 3; // threshold for enveloped EMG signal
 writing values to the servo too often draws a lot of power from the board, causing issues. e.g. affecting analog input.
 Thus need a "clock" for writing servo values less rapidly.
 */
-int svo_pin = 2; // digital output pin
-float svo_pos = 0; // starting servo position
-noDelay svo_clk(1000); //"clock" for servo
+// int svo_pin = 2; // digital output pin
+// float svo_pos = 0; // starting servo position
+// noDelay svo_clk(1000); //"clock" for servo
+
+//button parameters
+const int buttonPin = 4;  // the number of the pushbutton pin
+// const int ledPin = 12;    // the number of the LED pin
+
+// variables will change:
+int buttonState = 0;  // variable for reading the pushbutton status
 
 
 void setup() {
   Serial.begin(115200);
-
-  svo.attach(svo_pin); 
-  svo.write(svo_pos);
+  // initialize the LED pin as an output:
+  // pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+  // svo.attach(svo_pin); 
+  // svo.write(svo_pos);
 
   /*resting EMG signal collection for calibration*/ 
   Serial.println("Resting EMG collection for calibration");
@@ -54,6 +64,18 @@ void setup() {
 
 
 void loop() {
+  buttonState = digitalRead(buttonPin);
+
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  // if (buttonState == HIGH) {
+  //   // turn LED on:
+  //   digitalWrite(ledPin, HIGH);
+  // } else {
+  //   // turn LED off:
+  //   digitalWrite(ledPin, LOW);
+  // }
+  Serial.print(">button press: ");
+  Serial.println(buttonState);
   /*EMG collection and visualization*/
   float emg_raw = (analogRead(emg_pin) - emg_stat); // raw centered emg signal 
   // bandpass
@@ -76,13 +98,13 @@ void loop() {
   Serial.println(emg_evlp_avg);
   
   /*simple thresholding for servo output*/
-  if (svo_clk.update()){
-    if (emg_evlp_avg > emg_evlp_thd) {
-      svo_pos = 50;
-    }
-    else if (svo_pos > 0) {
-      svo_pos -= 10; // set back to 0
-    }
-    svo.write(svo_pos);
-  }
+  // if (svo_clk.update()){
+  //   if (emg_evlp_avg > emg_evlp_thd) {
+  //     svo_pos = 50;
+  //   }
+  //   else if (svo_pos > 0) {
+  //     svo_pos -= 10; // set back to 0
+  //   }
+  //   svo.write(svo_pos);
+  // }
 }
