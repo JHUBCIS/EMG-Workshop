@@ -4,61 +4,65 @@
 #include <NoDelay.h>
 #include <Servo.h>
 
-/*create instances for devices*/
-Servo svo; // servo motor
-
 /*create instances for data processing*/
 EMA_Filters emaFilt; 
 float f_s = 400; // sampling frequency
 const int avg_window = 10;
-RunningAverage rnAvg(avg_window);
+RunningAverage rnAvg0(avg_window);
+RunningAverage rnAvg1(avg_window);
+RunningAverage rnAvg2(avg_window);
 
 /*EMG parameters*/
-int emg_pin = 0; // analog input pin
-float emg_stat = 0; // resting EMG signal
-int emg_evlp_thd = 3; // threshold for enveloped EMG signal
+int emg_pin0 = 0; // analog input pin
+int emg_pin1 = 1; // analog input pin
+int emg_pin2 = 2; // analog input pin
+float emg_stat0 = 0; // resting EMG signal
+float emg_stat1 = 0; // resting EMG signal
+float emg_stat2 = 0; // resting EMG signal
 
-/*servo parameters
-writing values to the servo too often draws a lot of power from the board, causing issues. e.g. affecting analog input.
-Thus need a "clock" for writing servo values less rapidly.
-*/
-// int svo_pin = 2; // digital output pin
-// float svo_pos = 0; // starting servo position
-// noDelay svo_clk(1000); //"clock" for servo
+/*button parameters*/
+const int buttonPin0 = 4;  // the number of the pushbutton pin
+const int buttonPin1 = 7;  // the number of the pushbutton pin
+const int buttonPin2 = 8;  // the number of the pushbutton pin
+int buttonState0 = 0;  // variable for reading the pushbutton status
+int buttonState1 = 0;  // variable for reading the pushbutton status
+int buttonState2 = 0;  // variable for reading the pushbutton status
 
-//button parameters
-const int buttonPin = 4;  // the number of the pushbutton pin
 // const int ledPin = 12;    // the number of the LED pin
-
-// variables will change:
-int buttonState = 0;  // variable for reading the pushbutton status
-
 
 void setup() {
   Serial.begin(115200);
   // initialize the LED pin as an output:
   // pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
-  pinMode(buttonPin, INPUT);
-  // svo.attach(svo_pin); 
-  // svo.write(svo_pos);
+  pinMode(buttonPin0, INPUT);
+  pinMode(buttonPin1, INPUT);
+  pinMode(buttonPin2, INPUT);
 
   /*resting EMG signal collection for calibration*/ 
   Serial.println("Resting EMG collection for calibration");
-  float emg_stat_sum = 0;
+  float emg_stat_sum_0 = 0;
+  float emg_stat_sum_1 = 0;
+  float emg_stat_sum_2 = 0;
   for (int i=0; i<10; i++)
   {
     Serial.print("Done in ");
     Serial.println(10-i);
     for (int j=0; j<100; j++)
     {
-        emg_stat_sum += analogRead(emg_pin);
+        emg_stat_sum_0 += analogRead(emg_pin0);
+        emg_stat_sum_1 += analogRead(emg_pin1);
+        emg_stat_sum_2 += analogRead(emg_pin2);
         delay(10);
     } 
   }
-  emg_stat = emg_stat_sum / 1000.0;
+  emg_stat0 = emg_stat_sum_0 / 1000.0;
   Serial.print("Done! Resting EMG is: ");
-  Serial.println(emg_stat);
+  Serial.print(emg_stat0);
+  Serial.print("\t");
+  Serial.print(emg_stat1);
+  Serial.print("\t");
+  Serial.println(emg_stat2);
 }
 
 
@@ -69,7 +73,9 @@ void loop() {
   Serial.print(">elapsed Time (ms): ");
   Serial.println(elapsedTime);
 
-  buttonState = digitalRead(buttonPin);
+  buttonState0 = digitalRead(buttonPin0);
+  buttonState1 = digitalRead(buttonPin1);
+  buttonState2 = digitalRead(buttonPin2);
 
   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
   // if (buttonState == HIGH) {
@@ -79,37 +85,43 @@ void loop() {
   //   // turn LED off:
   //   digitalWrite(ledPin, LOW);
   // }
-  Serial.print(">button press: ");
-  Serial.println(buttonState);
+
   /*EMG collection and visualization*/
-  float emg_raw = (analogRead(emg_pin) - emg_stat); // raw centered emg signal 
+  float emg_raw0 = (analogRead(emg_pin0) - emg_stat0); // raw centered emg signal 
+  float emg_raw1 = (analogRead(emg_pin1) - emg_stat1); // raw centered emg signal 
+  float emg_raw2 = (analogRead(emg_pin2) - emg_stat2); // raw centered emg signal 
   // bandpass
   float f_c_bplow = 50; // low cut off frequency
   float f_c_bphigh = 150; // high cut off frequency
-  float emg_bp = emaFilt.BPF(emg_raw, f_c_bplow, f_c_bphigh, f_s); // bandpassed emg signal between 50 Hz and 150 Hz
-  // plot signals using Teleplot
-  Serial.print(">raw EMG signal: ");
-  Serial.println(emg_raw);
-  Serial.print(">bandpass EMG signal: ");
-  Serial.println(emg_bp);
+  float emg_bp0 = emaFilt.BPF(emg_raw0, f_c_bplow, f_c_bphigh, f_s); // bandpassed emg signal between 50 Hz and 150 Hz
+  float emg_bp1 = emaFilt.BPF(emg_raw1, f_c_bplow, f_c_bphigh, f_s); // bandpassed emg signal between 50 Hz and 150 Hz
+  float emg_bp2 = emaFilt.BPF(emg_raw2, f_c_bplow, f_c_bphigh, f_s); // bandpassed emg signal between 50 Hz and 150 Hz
 
   /*capture EMG singal envelope*/
   float f_c_lp = 1; // lowpass cut off frequency 
-  float emg_evlp =  pow(emaFilt.LPF(abs(emg_bp), f_c_lp, f_s), 2); // take magnitude, lowpass, then square
-  rnAvg.addValue(emg_evlp); // update the buffers
-  float emg_evlp_avg = rnAvg.getAverage();
-  // plot signals using Teleplot
-  Serial.print(">bandpass EMG signal envelope: ");
-  Serial.println(emg_evlp_avg);
-  
-  /*simple thresholding for servo output*/
-  // if (svo_clk.update()){
-  //   if (emg_evlp_avg > emg_evlp_thd) {
-  //     svo_pos = 50;
-  //   }
-  //   else if (svo_pos > 0) {
-  //     svo_pos -= 10; // set back to 0
-  //   }
-  //   svo.write(svo_pos);
-  // }
+  float emg_evlp0 =  pow(emaFilt.LPF(abs(emg_bp0), f_c_lp, f_s), 2); // take magnitude, lowpass, then square
+  float emg_evlp1 =  pow(emaFilt.LPF(abs(emg_bp1), f_c_lp, f_s), 2); // take magnitude, lowpass, then square
+  float emg_evlp2 =  pow(emaFilt.LPF(abs(emg_bp2), f_c_lp, f_s), 2); // take magnitude, lowpass, then square
+  rnAvg0.addValue(emg_evlp0); // update the buffers
+  rnAvg1.addValue(emg_evlp1); // update the buffers
+  rnAvg2.addValue(emg_evlp2); // update the buffers
+  float emg_evlp_avg0 = rnAvg0.getAverage();
+  float emg_evlp_avg1 = rnAvg1.getAverage();
+  float emg_evlp_avg2 = rnAvg2.getAverage();
+
+  // plot all signals using Teleplot
+  Serial.print(">button 0: "); Serial.println(buttonState0);
+  Serial.print(">button 1: "); Serial.println(buttonState1);
+  Serial.print(">button 2: "); Serial.println(buttonState2);
+
+  Serial.print(">raw EMG 0: "); Serial.println(emg_raw0);
+  Serial.print(">raw EMG 1: "); Serial.println(emg_raw1);
+  Serial.print(">raw EMG 2: "); Serial.println(emg_raw2);
+  Serial.print(">bandpass EMG 0: "); Serial.println(emg_bp0);
+  Serial.print(">bandpass EMG 1: "); Serial.println(emg_bp1);
+  Serial.print(">bandpass EMG 2: "); Serial.println(emg_bp2);
+
+  Serial.print(">bandpass EMG envelope 0: "); Serial.println(emg_evlp_avg0);
+  Serial.print(">bandpass EMG envelope 1: "); Serial.println(emg_evlp_avg1);
+  Serial.print(">bandpass EMG envelope 2: "); Serial.println(emg_evlp_avg2);
 }
