@@ -1,8 +1,8 @@
 # EMG-Workshop
 
-by JHUBCIS 2024.2
+JHUBCIS 2024.2 update:
 
-This version includes an extra part that allows logging muscle contractions with button presses.
+includes an extra part that allows logging muscle contractions with button presses.
 
 ## Setup
 
@@ -12,9 +12,14 @@ This version includes an extra part that allows logging muscle contractions with
 
    - This design pulls down the button digital pin by default, provides better stability of input
 
-    <img src="z_README/Arduino with button.png" alt="image-20230930001155737" style="zoom:50%;" />
 
-by JHUBCIS 2023.9
+The following diagram shows a design that receives up to 3 button press inputs
+
+ <img src="z_README/Arduino with button.png" alt="image-20230930001155737" style="zoom:50%;" />
+
+
+
+JHUBCIS 2023.9 update:
 
 ## Dependencies
 
