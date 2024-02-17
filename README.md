@@ -13,7 +13,7 @@ includes an extra part that allows logging muscle contractions with button press
    - This design pulls down the button digital pin by default, provides better stability of input
 
 
-The following diagram shows a design that receives up to 3 button press inputs
+The following diagram shows a design that receives up to 3 button press inputs, check this [link](https://www.tinkercad.com/things/8gvihiNezLQ-arduino-with-button?sharecode=3Chfptr3p3LsUomgnpSLpuxuKvZGgIFdwxjH1-WhXh4) for an interactive simulation.
 
  <img src="z_README/Arduino with button.png" alt="image-20230930001155737" style="zoom:50%;" />
 
